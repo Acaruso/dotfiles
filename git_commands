@@ -1,0 +1,23 @@
+git init                  // initializes git in current user folder
+
+git add <file>            // stages file--adds to list of files to commit
+
+git commit -m <comment>   // commits files, adds message <comment>
+
+git remote add <name> 
+               <webadd>   // create remote named <name> pointing at <web add>
+
+git push <name> master    // send commit to "master" branch at github
+
+"fork" on website         // create a fork online only
+
+git clone <webaddress>    // clones onto user comp
+
+git remote add <name> 
+               <webadd>   // assign original repo to a remote <name>
+
+git fetch <name>          // pull in changes not present in local repo
+
+git merge <name>/master   // merge any changes fetched into local files
+
+git pull <name> master    // pulls commits from upstream, automatically merges
