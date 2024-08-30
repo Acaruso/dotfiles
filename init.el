@@ -6,7 +6,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes '(wombat))
- '(package-selected-packages '(lsp-mode evil magit))
+ '(package-selected-packages '(counsel evil-collection key-chord lsp-mode evil magit))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -15,21 +15,13 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Consolas" :foundry "outline" :slant normal :weight regular :height 113 :width normal)))))
 
-;; MELPA stuff ------------------------------------------------------------
+(load-file "~/.emacs.d/init-packages.el")
 
-(require 'package) ; Initialize package management
+(load-file "~/.emacs.d/init-ex-commands.el")
 
-;; Add MELPA repository
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
+(load-file "~/.emacs.d/init-evil-keybindings.el")
 
-;; Initialize the package system
-(when (< emacs-major-version 27)
-  (package-initialize))
-
-;; Refresh package contents if the package list is not already available
-(unless package-archive-contents
-  (package-refresh-contents))
+(load-file "~/.emacs.d/init-scrolling.el")
 
 ;; other -----------------------------------------------------------------
 
@@ -59,29 +51,6 @@
   (define-key dired-mode-map (kbd "l") 'dired-up-directory-same-buffer)
   (put 'dired-find-alternate-file 'disabled nil))  ; Disable the warning
 
-;; evil mode
-(require 'evil)
-(evil-mode 1)
-
-(evil-define-key 'normal dired-mode-map "h" 'dired-up-directory)
-
-(evil-define-key 'normal dired-mode-map "l" 'dired-find-file)
-
-;; use M-hjkl to navigate windows (panes)
-(eval-after-load 'evil
-  '(progn
-     (define-key evil-normal-state-map (kbd "M-h") 'evil-window-left)
-     (define-key evil-normal-state-map (kbd "M-j") 'evil-window-down)
-     (define-key evil-normal-state-map (kbd "M-k") 'evil-window-up)
-     (define-key evil-normal-state-map (kbd "M-l") 'evil-window-right)))
-
-;; use C-jk to scroll up and down
-(eval-after-load 'evil
-  '(progn
-     ;; Bind Ctrl-h/j/k/l for scrolling operations
-     (define-key evil-normal-state-map (kbd "C-k") 'evil-scroll-line-up)
-     (define-key evil-normal-state-map (kbd "C-j") 'evil-scroll-line-down)
-     ))
 
 (with-eval-after-load 'help-mode
   (define-key help-mode-map (kbd "M-j") 'evil-window-down)
@@ -111,15 +80,6 @@
 
 (global-set-key (kbd "C-c h") 'my-custom-help)
 
-;; scrolling stuff
-;; Scroll one line at a time (less "jumpy" than defaults)
-(setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ; one line at a time
-(setq mouse-wheel-progressive-speed nil) ; don't accelerate scrolling
-(setq mouse-wheel-follow-mouse 't) ; scroll window under mouse
-(setq scroll-step 1) ; keyboard scroll one line at a time
-(setq scroll-conservatively 10000) ; Move the point only when it reaches the window edges
-(setq scroll-margin 3) ; Start scrolling when the point is this many lines from window edges
-
 ;; display line numbers
 (global-display-line-numbers-mode)
 
@@ -143,3 +103,17 @@
 (setq tramp-verbose 10)  ; Increase the verbosity level to get detailed logs
 
 ;; /ssh:ubuntu@ec2-54-234-49-150.compute-1.amazonaws.com#22:/
+
+(defun list-installed-packages ()
+  "Print a list of all installed packages."
+  (interactive)
+  (with-current-buffer (get-buffer-create "*Installed Packages*")
+    (erase-buffer)
+    (dolist (pkg package-alist)
+      (let ((name (car pkg))
+            (desc (car (cdr pkg))))
+        (when (package-installed-p name)
+          (insert (format "%s: %s\n" name (package-desc-summary desc))))))
+    (switch-to-buffer (current-buffer))))
+
+(message "init.el loaded")
