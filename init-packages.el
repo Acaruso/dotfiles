@@ -32,6 +32,9 @@
   (package-install 'evil-collection))
 (evil-collection-init)
 
+(unless (package-installed-p 'smart-comment)
+  (package-install 'smart-comment))
+
 (unless (package-installed-p 'key-chord)
   (package-install 'key-chord))
 
@@ -46,3 +49,27 @@
 (ivy-mode 1)
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
+
+(unless (package-installed-p 'counsel-etags)
+  (package-install 'counsel-etags))
+
+(unless (package-installed-p 'company)
+  (package-install 'company))
+
+(add-hook 'after-init-hook 'global-company-mode)
+
+(unless (package-installed-p 'company-ctags)
+  (package-install 'company-ctags))
+
+(with-eval-after-load 'company
+  (company-ctags-auto-setup))
+
+(unless (package-installed-p 'amx)
+  (package-install 'amx))
+
+(amx-mode)
+
+(setq counsel-M-x-function 'amx)
+
+(unless (package-installed-p 'modus-themes)
+  (package-install 'modus-themes))

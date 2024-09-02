@@ -16,6 +16,9 @@
      ;; Bind Ctrl-h/j/k/l for scrolling operations
      (define-key evil-normal-state-map (kbd "C-k") 'my-evil-scroll-line-up)
      (define-key evil-normal-state-map (kbd "C-j") 'my-evil-scroll-line-down)
+     ;; C-/ comments out selection in visual block mode
+     (define-key evil-normal-state-map (kbd "C-/") 'smart-comment)
+     (define-key evil-normal-state-map (kbd "C-SPC") 'keyboard-quit)
      ))
 
 (defun my-evil-scroll-line-up ()
@@ -32,3 +35,9 @@
   (evil-define-key 'normal ibuffer-mode map (kbd "l") 'ibuffer-visit-buffer))
 
 (evil-define-key 'normal ibuffer-mode map (kbd "l") 'ibuffer-visit-buffer)
+
+(define-key evil-normal-state-map (kbd "SPC") 'execute-extended-command)
+
+(define-key ivy-minibuffer-map (kbd "C-j") 'ivy-next-line)
+(define-key ivy-minibuffer-map (kbd "C-k") 'ivy-previous-line)
+(define-key ivy-minibuffer-map (kbd "C-SPC") 'minibuffer-keyboard-quit)

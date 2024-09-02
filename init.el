@@ -5,15 +5,49 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(wombat))
- '(package-selected-packages '(counsel evil-collection key-chord lsp-mode evil magit))
+ '(custom-enabled-themes '(modus-vivendi-tinted))
+ '(custom-safe-themes
+   '("8d146df8bd640320d5ca94d2913392bc6f763d5bc2bb47bed8e14975017eea91"
+     default))
+ '(package-selected-packages
+   '(amx company company-ctags counsel counsel-etags evil evil-collection
+	 evil-nerd-commenter key-chord lsp-mode magit modus-themes
+	 smart-comment))
  '(tool-bar-mode nil))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "Consolas" :foundry "outline" :slant normal :weight regular :height 113 :width normal)))))
+
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(default ((t (:family "Monospace" :foundry "outline" :slant normal :weight regular :height 100 :width normal)))))
+
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(default ((t (:family "Inconsolata" :foundry "outline" :slant normal :weight regular :height 113 :width normal)))))
+
+;;(message "Available fonts: %s" (font-family-list))
+
+(set-frame-font "Inconsolata-12" nil t)
+;; (set-frame-font "Ubuntu Sans Mono-12" nil t)
+;; (set-frame-font "DejaVu Sans Mono-11" nil t)
+;; (set-frame-font "Liberation Mono-11" nil t)
+
+;; (when (member "Inconsolata" (font-family-list))
+;;   (set-face-attribute 'default nil
+;;                       :family "Inconsolata"
+;;                       :foundry "outline"
+;;                       :slant 'normal
+;;                       :weight 'normal
+;;                       :height 113
+;;                       :width 'normal))
+
+;; don't use bold font when displaying code
+(set-face-bold 'font-lock-keyword-face nil)
+(set-face-bold 'font-lock-type-face nil)
 
 (load-file "~/.emacs.d/init-packages.el")
 
@@ -25,11 +59,10 @@
 
 ;; other -----------------------------------------------------------------
 
-(defun edit-emacs-config ()
+(defun config ()
   "Open the init file."
   (interactive)
   (find-file "~/.emacs.d/init.el"))
-(defalias 'config 'edit-emacs-config)
 
 (setq bookmark-save-flag 1)
 
