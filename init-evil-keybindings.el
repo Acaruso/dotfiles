@@ -10,7 +10,6 @@
      (define-key evil-normal-state-map (kbd "M-k") 'evil-window-up)
      (define-key evil-normal-state-map (kbd "M-l") 'evil-window-right)))
 
-;; use C-jk to scroll up and down
 (eval-after-load 'evil
   '(progn
      ;; Bind Ctrl-h/j/k/l for scrolling operations
@@ -37,7 +36,7 @@
 (evil-define-key 'normal ibuffer-mode map (kbd "l") 'ibuffer-visit-buffer)
 
 (define-key evil-normal-state-map (kbd "SPC") 'execute-extended-command)
+(define-key ivy-minibuffer-map (kbd "C-SPC") 'minibuffer-keyboard-quit)
 
 (define-key ivy-minibuffer-map (kbd "C-j") 'ivy-next-line)
 (define-key ivy-minibuffer-map (kbd "C-k") 'ivy-previous-line)
-(define-key ivy-minibuffer-map (kbd "C-SPC") 'minibuffer-keyboard-quit)

@@ -31,8 +31,8 @@
 
 ;;(message "Available fonts: %s" (font-family-list))
 
-(set-frame-font "Inconsolata-12" nil t)
-;; (set-frame-font "Ubuntu Sans Mono-12" nil t)
+;; (set-frame-font "Inconsolata-12" nil t)
+;; (set-frame-font "Ubuntu Sans Mono-11" nil t)
 ;; (set-frame-font "DejaVu Sans Mono-11" nil t)
 ;; (set-frame-font "Liberation Mono-11" nil t)
 
@@ -148,5 +148,32 @@
         (when (package-installed-p name)
           (insert (format "%s: %s\n" name (package-desc-summary desc))))))
     (switch-to-buffer (current-buffer))))
+
+(blink-cursor-mode 0)
+
+;; Use spaces instead of tabs
+(setq-default indent-tabs-mode nil)
+
+;; Set the tab width and standard indent to 4 spaces
+(setq-default tab-width 4)
+(setq-default standard-indent 4)
+
+(defun my-c-mode-hook ()
+  (setq c-basic-offset 4)   ;; Set indentation level to 4 spaces
+  (c-set-offset 'substatement-open 0)   ;; Don't indent braces
+  ;; (c-set-style "bsd")
+)
+
+(add-hook 'c-mode-common-hook 'my-c-mode-hook)
+
+;; (setq-default c-basic-offset 4)
+
+;; (custom-set-variables
+;;  '(c-basic-offset 4))
+
+;; (defun debug-c-hook ()
+;;   (message "c-basic-offset is now set to: %s" c-basic-offset))
+
+;; (add-hook 'c-mode-common-hook 'debug-c-hook t)  ;; 't' to ensure it runs last
 
 (message "init.el loaded")

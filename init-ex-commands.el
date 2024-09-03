@@ -22,19 +22,23 @@
 
 (evil-ex-define-cmd "dir" 'dired)
 
-(evil-ex-define-cmd "q" 'delete-window)
-(evil-ex-define-cmd "qq" (lambda ()
-			   (interactive)
-			   (kill-buffer)
-			   (delete-window)))
+(evil-ex-define-cmd "dw" 'delete-window)
+;; (evil-ex-define-cmd "qq" (lambda ()
+;; 			   (interactive)
+;; 			   (kill-buffer)
+;; 			   (delete-window)))
 
-(evil-ex-define-cmd "f" 'my-etags-find)
-(defun my-etags-find ()
-  (interactive)
-  (counsel-etags-find-tag-at-point)
-  (recenter))
-  
-(evil-ex-define-cmd "b" 'pop-tag-mark)
+(evil-ex-define-cmd "q" 'kill-buffer)
+
+(evil-ex-define-cmd "f" (lambda ()
+			  (interactive)
+			  (counsel-etags-find-tag-at-point)
+			  (recenter)))
+
+(evil-ex-define-cmd "b" (lambda ()
+			  (interactive)
+			  (pop-tag-mark)
+			  (recenter)))
 
 (evil-ex-define-cmd "/" 'smart-comment)
 
