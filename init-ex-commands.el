@@ -61,4 +61,4 @@
 
 (evil-ex-define-cmd "t" 'counsel-etags-menu)
 
-
+(define-key evil-normal-state-map "/" 'swiper)

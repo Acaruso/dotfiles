@@ -15,6 +15,8 @@
 	 smart-comment))
  '(tool-bar-mode nil))
 
+(menu-bar-mode -1)
+
 ;; (custom-set-faces
 ;;  ;; custom-set-faces was added by Custom.
 ;;  ;; If you edit it by hand, you could mess it up, so be careful.
