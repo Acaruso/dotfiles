@@ -18,6 +18,7 @@
      ;; C-/ comments out selection in visual block mode
      (define-key evil-normal-state-map (kbd "C-/") 'smart-comment)
      (define-key evil-normal-state-map (kbd "C-SPC") 'keyboard-quit)
+     (define-key evil-normal-state-map (kbd "C-l") 'avy-goto-line)
      ))
 
 (defun my-evil-scroll-line-up ()

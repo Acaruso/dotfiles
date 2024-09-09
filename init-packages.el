@@ -73,3 +73,27 @@
 
 (unless (package-installed-p 'modus-themes)
   (package-install 'modus-themes))
+
+(unless (package-installed-p 'projectile)
+  (package-install 'projectile))
+(require 'projectile)
+(projectile-mode +1)
+(setq projectile-completion-system 'ivy)
+
+(unless (package-installed-p 'counsel-projectile)
+  (package-install 'counsel-projectile))
+(counsel-projectile-mode)
+
+;; (unless (package-installed-p 'auto-highlight-symbol)
+;;   (package-install 'auto-highlight-symbol))
+;; (require 'auto-highlight-symbol)
+;; (global-auto-highlight-symbol-mode t)
+
+(unless (package-installed-p 'avy)
+  (package-install 'avy))
+(setq avy-background t)
+
+
+(unless (package-installed-p 'eshell-bookmark)
+  (package-install 'eshell-bookmark))
+(add-hook 'eshell-mode-hook 'eshell-bookmark-setup)
