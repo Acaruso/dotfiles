@@ -1,9 +1,7 @@
-;; disable scrollbars
-(customize-set-variable 'scroll-bar-mode nil)
-(customize-set-variable 'horizontal-scroll-bar-mode nil)
-
 ;; Options stuff
 
+;; (customize-set-variable 'scroll-bar-mode nil)
+;; (customize-set-variable 'horizontal-scroll-bar-mode nil)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -12,8 +10,10 @@
  '(custom-enabled-themes '(modus-vivendi-tinted))
  '(custom-safe-themes
    '("8d146df8bd640320d5ca94d2913392bc6f763d5bc2bb47bed8e14975017eea91" default))
+ '(horizontal-scroll-bar-mode nil)
  '(package-selected-packages
-   '(eshell-bookmark avy auto-highlight-symbol highlight-symbol amx company company-ctags counsel counsel-etags evil evil-collection evil-nerd-commenter key-chord lsp-mode magit modus-themes smart-comment))
+   '(org-autolist eshell-bookmark avy auto-highlight-symbol highlight-symbol amx company company-ctags counsel counsel-etags evil evil-collection evil-nerd-commenter key-chord lsp-mode magit modus-themes smart-comment))
+ '(scroll-bar-mode nil)
  '(tool-bar-mode nil))
 
 (menu-bar-mode -1)
@@ -118,7 +118,19 @@
 ;; display line numbers
 (global-display-line-numbers-mode)
 
-(setq tramp-verbose 10)  ; Increase the verbosity level to get detailed logs
+;; (setq tramp-verbose 10)  ; Increase the verbosity level to get detailed logs
+
+(when (eq system-type 'windows-nt)
+  ;; Get the tramp-methods variable populated
+  (require 'tramp)
+  ;; Add the '-tt' flag to the login arguments for "ssh" ONLY
+  (push '("-tt")
+        (cadr (assoc 'tramp-login-args
+                     (assoc "ssh" tramp-methods)))))
+
+;; supposedly this is also necessary for tramp
+(when (eq system-type 'windows-nt)
+  (prefer-coding-system 'utf-8-unix))
 
 (defun list-installed-packages ()
   "Print a list of all installed packages."
@@ -144,10 +156,70 @@
 ;; automatically insert closing quotes, parens, etc.
 (electric-pair-mode 1)
 
-(message "init.el loaded")
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; disable scrollbars
+;; (customize-set-variable 'scroll-bar-mode nil)
+;; (customize-set-variable 'horizontal-scroll-bar-mode nil)
+
+;; (add-hook 'emacs-startup-hook
+;;           (lambda ()
+;;             (scroll-bar-mode -1)
+;;             (horizontal-scroll-bar-mode -1)))
+
+;; (defun my/disable-scroll-bars (frame)
+;;   (modify-frame-parameters frame
+;;                            '((vertical-scroll-bars . nil)
+;;                              (horizontal-scroll-bars . nil))))
+;; (add-hook 'after-make-frame-functions 'my/disable-scroll-bars)
+
+;; (add-to-list 'default-frame-alist
+;;              '(vertical-scroll-bars . nil))
+
+;; org mode stuff
+
+(defun org-indent-item-custom ()
+  "Indent an org list item."
+  (interactive)
+  (if (org-at-item-p)
+      (org-indent-item)
+    (insert "\t")))
+
+(defun org-outdent-item-custom ()
+  "Outdent an org list item."
+  (interactive)
+  (if (org-at-item-p)
+      (org-outdent-item)
+    (delete-backward-char 1)))
+
+(with-eval-after-load 'org
+  ;; Unbind the default TAB actions
+  (define-key org-mode-map (kbd "TAB") nil)
+  (define-key org-mode-map (kbd "<tab>") nil)
+
+  ;; Bind new TAB behavior
+  (define-key org-mode-map (kbd "TAB") 'org-indent-item-custom)
+  (define-key org-mode-map (kbd "<tab>") 'org-indent-item-custom)
+  (define-key org-mode-map (kbd "<S-tab>") 'org-outdent-item-custom)
+  (define-key org-mode-map (kbd "<S-iso-lefttab>") 'org-outdent-item-custom)
+
+  ;; (define-key org-mode-map (kbd "M-h") 'evil-window-left)
+  ;; (define-key org-mode-map (kbd "M-j") 'evil-window-down)
+  ;; (define-key org-mode-map (kbd "M-k") 'evil-window-up)
+  ;; (define-key org-mode-map (kbd "M-l") 'evil-window-right)
+  )
+
+(with-eval-after-load 'org
+  (with-eval-after-load 'evil
+    (evil-define-key 'normal org-mode-map (kbd "M-h") 'evil-window-left)
+    (evil-define-key 'normal org-mode-map (kbd "M-j") 'evil-window-down)
+    (evil-define-key 'normal org-mode-map (kbd "M-k") 'evil-window-up)
+    (evil-define-key 'normal org-mode-map (kbd "M-l") 'evil-window-right)
+  ))
+
+(message "init.el loaded")

@@ -19,17 +19,24 @@
      (define-key evil-normal-state-map (kbd "C-/") 'smart-comment)
      (define-key evil-normal-state-map (kbd "C-SPC") 'keyboard-quit)
      (define-key evil-normal-state-map (kbd "C-l") 'avy-goto-line)
+     (define-key evil-normal-state-map (kbd ";") 'avy-goto-char-timer)
      ))
 
 (defun my-evil-scroll-line-up ()
   (interactive)
   (evil-scroll-line-up 1)
-  (previous-line))
+  (evil-scroll-line-up 1)
+  (previous-line)
+  (previous-line)
+  )
 
 (defun my-evil-scroll-line-down ()
   (interactive)
   (evil-scroll-line-down 1)
-  (next-line))
+  (evil-scroll-line-down 1)
+  (next-line)
+  (next-line)
+  )
 
 (with-eval-after-load 'evil-collection-ibuffer
   (evil-define-key 'normal ibuffer-mode map (kbd "l") 'ibuffer-visit-buffer))

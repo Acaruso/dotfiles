@@ -93,7 +93,19 @@
   (package-install 'avy))
 (setq avy-background t)
 
-
 (unless (package-installed-p 'eshell-bookmark)
   (package-install 'eshell-bookmark))
 (add-hook 'eshell-mode-hook 'eshell-bookmark-setup)
+
+(unless (package-installed-p 'eshell-bookmark)
+  (package-install 'eshell-bookmark))
+
+;; (eval-when-compile
+;;   (require 'use-package))
+
+;; (use-package org-autolist
+;;   :hook (org-mode . org-autolist-mode))
+
+(unless (package-installed-p 'org-autolist)
+  (package-install 'org-autolist))
+(add-hook 'org-mode-hook (lambda () (org-autolist-mode)))
